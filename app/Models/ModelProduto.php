@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ModelProduto extends Model
 {
     use HasFactory;
+    protected $fillable =['id', 'nome_produto', 'preco_produto', 'cod_categoria'];
+    public $timestamps = false;
+    public $table = "tb_produtos";
+    
 }

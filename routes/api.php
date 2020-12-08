@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ComprarController;
+use App\Http\Controllers\ProdutosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('produtos', [ComprarController::class, 'index']);
+
+Route::group(['prefix'=>'admin/cad'], function(){
+    Route::post('categoria', [ProdutosController::class, 'createCategoria']);
+    Route::post('produto', [ProdutosController::class, 'createProduto']);
+    Route::get('promocao');
+});
+
+Route::group(['prefix'=>''], function(){
+    Route::get('produtos', [ComprarController::class, 'index']);
+    Route::get('payout', [ComprarController::class, 'index']);
+});
