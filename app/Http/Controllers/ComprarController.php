@@ -40,7 +40,7 @@ class ComprarController extends Controller
            $cpf = $value['cpf'];
             ModelCompras::create([
               'cod_produto'=>$value['codProduto'],
-              'preco_produto'=>$value['precoProduto'],
+              'preco_compra'=>$value['precoProduto'],
               'cpf'=>$value['cpf'],
               'quantidade'=>$value['quantidade'],
               'num_pedido'=>$pedido,
