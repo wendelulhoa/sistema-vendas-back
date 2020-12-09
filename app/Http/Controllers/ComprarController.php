@@ -13,12 +13,12 @@ class ComprarController extends Controller
   public function index(Request $request){
        switch($request['tipo']){
         case 'pedidos':
-          return ModelComprasPivot::all();
+          return ModelComprasPivot::where([['cpf', $request->cpf]])->get();
         break;
         case 'compras':
           return ModelCompras::
           join('tb_produtos', 'tb_compras.cod_produto', '=', 'tb_produtos.id')
-          ->where([['tb_compras.num_pedido', $request->cod],['tb_compra.cpf', $request->cpf]])
+          ->where([['tb_compras.num_pedido', $request->cod], ['tb_compras.cpf', $request->cpf]])
         ->get();
         break;
        }
@@ -37,17 +37,18 @@ class ComprarController extends Controller
         }
       }else{
          foreach($request->all() as $item=> $value){
+           $cpf = $value['cpf'];
             ModelCompras::create([
               'cod_produto'=>$value['codProduto'],
               'preco_produto'=>$value['precoProduto'],
-              'cpf'=>$request->cpf,
+              'cpf'=>$value['cpf'],
               'quantidade'=>$value['quantidade'],
               'num_pedido'=>$pedido,
               'data_compra'=>$dataLocal
             ]);
          }
          ModelComprasPivot::create([
-           'cpf'=> $request->cpf,
+           'cpf'=> $cpf,
            'cod_pedido'=>$pedido,
            'data_compra'=>$dataLocal
          ]);
