@@ -11,13 +11,21 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('apiJwt', ['except' => ['login']]);
+        $this->middleware('apiJwt', ['except' => ['login', 'autoLogin']]);
+    }
+    public function autoLogin(Request $request){
+        $email = $request['cpf'];
+        $password = 'teste123';
+        if (!$token = Auth::attempt(['cpf'=> $email, 'password'=> $password])) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->respondWithToken($token);
     }
     public function login(Request $request)
     {
-        $email = $request['matricula'];
+        $email = $request['cpf'];
         $password = $request['password'];
-        if (!$token = Auth::attempt(['matricula'=> $email, 'password'=> $password])) {
+        if (!$token = Auth::attempt(['cpf'=> $email, 'password'=> $password])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

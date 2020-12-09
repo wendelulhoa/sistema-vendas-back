@@ -16,6 +16,7 @@ class User extends Authenticatable implements JWTSubject
         'id',
         'cpf',
         'password',
+        'user_name'
     ];
     public $hidden = ['password'];
     protected $table = "tb_login";

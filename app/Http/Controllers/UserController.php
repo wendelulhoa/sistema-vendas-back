@@ -8,6 +8,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,15 +24,17 @@ class UserController extends Controller
                 ]);
                 User::create([
                     'cpf'=>$request->cpf,
-                    'password'=>$request->senha,
+                    'user_name'=>$request->nome,
+                    'password'=>Hash::make($request->senha),
                     'adm'=>0
                 ]);
                 ModelEndereco::create([
                     'endereco'=>$request->endereco,
-                    'cep'=>$request->rua,
+                    'cep'=>$request->cep,
                     'cidade'=>$request->cidade,
                     'uf'=>$request->uf,
-                    'cpf'=>$request->cpf
+                    'cpf'=>$request->cpf,
+                    'rua'=>$request->rua
                 ]);
             });
             return response()->json(['success'], 200);
